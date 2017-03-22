@@ -5,7 +5,7 @@
  * @export
  * @param {string} str The line that we are parsing
  * @param {boolean} needWhitespace TRUE if we need to add whitespace, FALSE if we don't
- * @returns {string} TODO: @bobby 
+ * @returns {string} String version of a Snippet (converted in the commands)
  */
 export default function parseFunc(str: string, needWhitespace: boolean): string {
     let whitespace;
@@ -15,7 +15,7 @@ export default function parseFunc(str: string, needWhitespace: boolean): string 
     if (needWhitespace) {
         const whitespaceRE = new RegExp(/^[\s\t]+/);
         whitespace = whitespaceRE.test(str) ? whitespaceRE.exec(str) : '';
-        firstChar = '/';
+        firstChar = '/**';
     } else {
         whitespace = '';
     }
@@ -81,7 +81,7 @@ export default function parseFunc(str: string, needWhitespace: boolean): string 
     console.log('Max Size: ' + maxSize);*/
 
     // Generating the Snippet as a string.
-    let comment = `${whitespace}${firstChar}**\n${whitespace} * \${1:${methodName} description}\n`;
+    let comment = `${whitespace}${firstChar}\n${whitespace} * \${1:${methodName} description}\n`;
 
     // The padding is a string that is a bunch of spaces equal to the maximum size of the variable.
     const padding = Array(maxSize).join(' ');

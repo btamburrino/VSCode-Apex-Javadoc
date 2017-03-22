@@ -14,4 +14,4 @@ There are three ways to create a comment on an Apex method:
 
 ## Known Issues
 
-* No tests.
+* You'll find them, I'm sure. Report them [here](https://github.com/btamburrino/VSCode-Apex-Javadoc/issues).

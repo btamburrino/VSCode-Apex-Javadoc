@@ -14,6 +14,6 @@ export default function subscriptions(): vscode.Disposable[] {
     return [
         vscode.commands.registerCommand('force.apexJavadoc', apexJavadoc),
         vscode.commands.registerCommand('force.apexJavadocCompletion', apexJavadocCompletion),
-        vscode.languages.registerCompletionItemProvider('apex', new apexJavadocProvider(), '/**'),
+        vscode.languages.registerCompletionItemProvider('apex', new apexJavadocProvider(), '*'),
     ];
 }

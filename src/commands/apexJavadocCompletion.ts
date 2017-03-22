@@ -13,6 +13,6 @@ export default function apexJavadocCompletion(position: vscode.Position): Thenab
     // Get the NEXT line from where we are
     const parsed = parseFunc(editor.document.lineAt(position.line + 1).text, false);
     // If the parsing function returned nothing, return a simple Javadoc snippet
-    const snippet = parsed ? new vscode.SnippetString(parsed) : new vscode.SnippetString('**\n * $0\n */');
-    return editor.insertSnippet(snippet, position);
+    const snippet = parsed ? new vscode.SnippetString(parsed) : new vscode.SnippetString('\n * $0\n */');
+    return editor.insertSnippet(snippet, position, {undoStopBefore: false, undoStopAfter: false});
 }
