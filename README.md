@@ -1,5 +1,9 @@
 # Apex Javadoc
 
+[![Version](http://vsmarketplacebadge.apphb.com/version/btamburrino.apex-javadoc.svg)](https://marketplace.visualstudio.com/items?itemName=btamburrino.apex-javadoc)
+[![Installs](http://vsmarketplacebadge.apphb.com/installs/btamburrino.apex-javadoc.svg)](https://marketplace.visualstudio.com/items?itemName=btamburrino.apex-javadoc)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating/btamburrino.apex-javadoc.svg)](https://vsmarketplacebadge.apphb.com/rating/btamburrino.apex-javadoc.svg)
+
 Stubs a Javadoc Comment for a Salesforce Apex method based on the parameters.
 
 Works best with [ForceCode](https://github.com/celador/ForceCode)

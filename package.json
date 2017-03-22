@@ -14,6 +14,11 @@
     "onLanguage:apex"
   ],
   "main": "./out/src/extension",
+  "icon": "images/new-logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/btamburrino/VSCode-Apex-Javadoc"
+  },
   "contributes": {
     "configuration": {
       "type": "object",
