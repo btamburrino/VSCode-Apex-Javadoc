@@ -9,6 +9,12 @@ import subscriptions from './subscriptions';
  * @param {vscode.ExtensionContext} context 
  * @returns void
  */
-export function activate(context: vscode.ExtensionContext): void {
-    subscriptions().map(disposable => context.subscriptions.push(disposable));
+export function activate(context: vscode.ExtensionContext): boolean {
+    try {
+        subscriptions().map(disposable => context.subscriptions.push(disposable));
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
