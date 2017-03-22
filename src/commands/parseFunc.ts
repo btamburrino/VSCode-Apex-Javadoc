@@ -50,7 +50,7 @@ export default function parseFunc(str: string, needWhitespace: boolean): string 
 
     let variableList = new Array();
     let maxSize = 0;
-    const variableRE = new RegExp('\(([^)]+)\)');
+    const variableRE = new RegExp(/\(([^)]+)\)/);
 
     // If there are variables, this extracts the list of them.
     if (variableRE.test(str)) {
