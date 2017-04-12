@@ -17,4 +17,9 @@ suite('Extension Tests', () => {
                 assert.equal(true, res);
             });
     });
+
+    test('can Parse empty string', () => {
+        let comment = myExtension.parseFunc('', false);
+        assert.equal('', comment);
+    });
 });
