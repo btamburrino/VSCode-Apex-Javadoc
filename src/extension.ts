@@ -23,7 +23,14 @@ export function activate(context: vscode.ExtensionContext) {
 
         // Get the line that we are currently on
         const lineNum = editor.selection.active.line;
-        const funcLine = editor.document.lineAt(lineNum);
+        var funcLine = editor.document.lineAt(lineNum);
+
+        // If the line starts with a @, then it's a @AuraEnabled or @RemoteAction and look at the next line
+        var currLine = lineNum;
+        while (funcLine.text.trim().startsWith('@')) {
+            currLine++;
+            funcLine = editor.document.lineAt(currLine);
+        }
 
         // If the line is not empty, parse it and add in a snippet on the line above.
         if (!funcLine.isEmptyOrWhitespace) {
@@ -72,7 +79,14 @@ function apexJavadocCompletion(position: vscode.Position): Thenable<boolean> {
 
     // Get the NEXT line from where we are
     const lineNum = position.line + 1;
-    const funcLine = editor.document.lineAt(lineNum);
+    var funcLine = editor.document.lineAt(lineNum);
+
+    // If the line starts with a @, then it's a @AuraEnabled or @RemoteAction and look at the next line
+    var currLine = lineNum;
+    while (funcLine.text.trim().startsWith('@')) {
+        currLine++;
+        funcLine = editor.document.lineAt(currLine);
+    }
 
     const parsed = parseFunc(funcLine.text, false);
     // If the parsing function returned nothing, return a simple Javadoc snippet
