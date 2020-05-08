@@ -188,7 +188,13 @@ export function parseFunc(str: string, needWhitespace: boolean) {
     if (hasReturn) {
         comment += `${whitespace} * @return  ${padding} \${${snippetNum}:return description}\n`;
     }
-    comment += `${whitespace} */`;
+    comment += `${whitespace}`;
+
+    // Some installations of VSCode add the final */ to the javadoc comment and some don't.
+    const showTrailing = vscode.workspace.getConfiguration().get('force.showApexJavadocTrailingCloseComment');
+    if (showTrailing === true) {
+        comment += ` */`;
+    }
 
     return comment;
 }
