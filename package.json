@@ -2,7 +2,7 @@
   "name": "apex-javadoc",
   "displayName": "Apex Javadoc",
   "description": "Stubs a Javadoc Comment for a Salesforce Apex method",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publisher": "btamburrino",
   "engines": {
     "vscode": "^1.10.0"

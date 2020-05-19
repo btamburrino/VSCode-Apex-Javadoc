@@ -36,7 +36,10 @@ export function activate(context: vscode.ExtensionContext) {
         if (!funcLine.isEmptyOrWhitespace) {
             const parsed = parseFunc(funcLine.text, true);
             const position = new vscode.Position(lineNum, 0);
-            editor.insertSnippet(new vscode.SnippetString(`${parsed}\n`), position);
+            // If empty, return a non-whitepsaced aligned blank javadoc.
+            // Not ideal, but only occurs when using the right-click context action on a class definition
+            const snippet = (parsed === '') ? '/**\n * \n */' : parsed;
+            editor.insertSnippet(new vscode.SnippetString(`${snippet}\n`), position);
         }
     });
     context.subscriptions.push(disposable);
@@ -89,15 +92,25 @@ function apexJavadocCompletion(position: vscode.Position): Thenable<boolean> {
     }
 
     const parsed = parseFunc(funcLine.text, false);
-    // If the parsing function returned nothing, return a simple Javadoc snippet
-    const snippet = (parsed === '') ? new vscode.SnippetString('\n * $0\n */') : new vscode.SnippetString(parsed);
+    var comment;
+    if (parsed === '') {
+        // If the parsing function returned nothing, return a simple Javadoc snippet respecting the trailing close comment setting
+        comment = '\n * $0\n';
+        const showTrailing = vscode.workspace.getConfiguration().get('force.showApexJavadocTrailingCloseComment');
+        if (showTrailing === true) {
+            comment += ' */';
+        }
+    } else {
+        comment = parsed;
+    }
+    const snippet = new vscode.SnippetString(comment);
     return editor.insertSnippet(snippet, position, {undoStopBefore: false, undoStopAfter: false});
 }
 
 /**
  * The workhorse function that parses the method signature and generates the Snippet
  * @param str The line that we are parsing
- * @param needWhitespace TRUE if we need to add whitespace, FALSE if we don't
+ * @param needWhitespace TRUE if we need to add whitespace, FALSE if we don't - also acts as a way to tell if used from right-click context menu or not
  */
 export function parseFunc(str: string, needWhitespace: boolean) {
     var whitespace;
@@ -192,7 +205,7 @@ export function parseFunc(str: string, needWhitespace: boolean) {
 
     // Some installations of VSCode add the final */ to the javadoc comment and some don't.
     const showTrailing = vscode.workspace.getConfiguration().get('force.showApexJavadocTrailingCloseComment');
-    if (showTrailing === true) {
+    if ((needWhitespace === true) || (showTrailing === true)) {
         comment += ` */`;
     }
 

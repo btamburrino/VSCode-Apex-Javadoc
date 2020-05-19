@@ -17,4 +17,5 @@ There are three ways to create a comment on an Apex method:
 
 ## Known Issues
 
-* You'll find them, I'm sure. Report them [here](https://github.com/btamburrino/VSCode-Apex-Javadoc/issues).
+* If using the right-click context action on a class definition, the blank Javadoc comment is not whitespaced aligned with the beginning of the class definition. If you type `/**` and hit tab, it works as intended.
+* You'll find more, I'm sure. Report them [here](https://github.com/btamburrino/VSCode-Apex-Javadoc/issues).
