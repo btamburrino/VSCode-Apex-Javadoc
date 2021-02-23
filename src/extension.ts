@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         // If the line is not empty, parse it and add in a snippet on the line above.
         if (!funcLine.isEmptyOrWhitespace) {
-            const parsed = parseFunc(funcLine.text, true);
+            const parsed = parseFunc(currLine, true);
             const position = new vscode.Position(lineNum, 0);
             // If empty, return a non-whitepsaced aligned blank javadoc.
             // Not ideal, but only occurs when using the right-click context action on a class definition
@@ -88,10 +88,9 @@ function apexJavadocCompletion(position: vscode.Position): Thenable<boolean> {
     var currLine = lineNum;
     while (funcLine.text.trim().startsWith('@')) {
         currLine++;
-        funcLine = editor.document.lineAt(currLine);
     }
 
-    const parsed = parseFunc(funcLine.text, false);
+    const parsed = parseFunc(currLine, false);
     var comment;
     if (parsed === '') {
         // If the parsing function returned nothing, return a simple Javadoc snippet respecting the trailing close comment setting
@@ -109,12 +108,25 @@ function apexJavadocCompletion(position: vscode.Position): Thenable<boolean> {
 
 /**
  * The workhorse function that parses the method signature and generates the Snippet
- * @param str The line that we are parsing
+ * @param startingLine The line number that we are parsing
  * @param needWhitespace TRUE if we need to add whitespace, FALSE if we don't - also acts as a way to tell if used from right-click context menu or not
  */
-export function parseFunc(str: string, needWhitespace: boolean) {
+export function parseFunc(startingLine: number, needWhitespace: boolean) {
     var whitespace;
     var firstChar = '';
+
+    if ((startingLine === undefined) || (startingLine === null)) {
+        return '';
+    }
+
+    // Get the entire function definition - even if it spans multiple lines!
+    const editor = vscode.window.activeTextEditor;
+    var lineNum = startingLine;
+    var str = editor.document.lineAt(lineNum).text;
+    while (str.indexOf(')') === -1) {
+        lineNum++;
+        str += editor.document.lineAt(lineNum).text;
+    }
 
     // If we need whitespace, find out how much. We also need to add the first slash as a character since it won't already be typed.
     if (needWhitespace) {

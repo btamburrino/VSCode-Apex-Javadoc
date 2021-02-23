@@ -19,7 +19,7 @@ suite('Extension Tests', () => {
     });
 
     test('can Parse empty string', () => {
-        let comment = myExtension.parseFunc('', false);
+        let comment = myExtension.parseFunc(null, false);
         assert.equal('', comment);
     });
 });
