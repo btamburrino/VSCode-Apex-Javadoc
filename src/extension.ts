@@ -197,12 +197,23 @@ export function parseFunc(startingLine: number, needWhitespace: boolean) {
     console.log(variableList);
     console.log('Max Size: ' + maxSize);*/
 
+    // New ApexDoc specs call for a @description tag, but it's still optional
+    const descriptionTag = (vscode.workspace.getConfiguration().get('force.showApexJavadocDescriptionTag') === true) ? ' @description' : '';
+
     // Generating the Snippet as a string.
-    var comment = `${whitespace}${firstChar}\n${whitespace} * \${1:${methodName} description}\n`;
+    var comment = `${whitespace}${firstChar}\n${whitespace} *${descriptionTag} \${1:${methodName} description}\n`;
+
+    var snippetNum = 2;
+
+    // Optional Author tag with default value that can be changed in settings
+    if (vscode.workspace.getConfiguration().get('force.showApexJavadocAuthorTag') === true) {
+        const authorName = vscode.workspace.getConfiguration().get('force.defaultApexJavadocAuthor');
+        comment += `${whitespace} * @author \${${snippetNum}:${authorName}}\n`;
+        snippetNum++;
+    }
 
     // The padding is a string that is a bunch of spaces equal to the maximum size of the variable.
     const padding = Array(maxSize).join(' ');
-    var snippetNum = 2;
     for (let varName of variableList) {
         // No need to import any right-pad node libraries here!
         var padStr = (varName + padding).substring(0, maxSize);

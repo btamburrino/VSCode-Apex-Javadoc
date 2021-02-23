@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.2.0
+- Adds the `@description` tag as specified by new ApexDoc standards by default - however this can be disabled in settings
+- Adds the `@author` tag and allows a default value to be set - however this is disabled by default
+- Allows the variable definition to span multiple lines
+
 ## 1.1.1
 - Disabled the second `*/` on class definitions if that setting is false
 - Adds class definitions to the right-click context action, however they are not whitespaced with the class definition like if using the snippet feature
