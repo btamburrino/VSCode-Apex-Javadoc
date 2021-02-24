@@ -154,9 +154,12 @@ export function parseFunc(startingLine: number, needWhitespace: boolean) {
             // If the paren is greater than 0 of this token, then the method name is in this token (the user typed "myFunc()")
             methodName = thisStr.substr(0, paren);
             break;
-        } else if (thisStr.toLowerCase() == 'void') {
+        } else if (thisStr.toLowerCase() === 'void') {
             // If this token is the word void, there is no return parameter, so we don't need to show that part of the javadoc.
             hasReturn = false;
+        } else if (thisStr.toLowerCase() === 'class') {
+            // If this token is the word class, then this is a class definition and we want to return a blank javadoc.
+            return '';
         }
         // We store this token so we can access it on the next pass if needed.
         lastResult = thisStr;
@@ -191,12 +194,12 @@ export function parseFunc(startingLine: number, needWhitespace: boolean) {
         }
     }
 
-    // This is me printing everything out to the console during development.
+    /* This is me printing everything out to the console during development.
     console.log('Method: ' + methodName);
     console.log('Has Return: ' + hasReturn);
     console.log('Variables:');
     console.log(variableList);
-    console.log('Max Size: ' + maxSize);
+    console.log('Max Size: ' + maxSize); */
 
     // New ApexDoc specs call for a @description tag, but it's still optional
     const descriptionTag = (vscode.workspace.getConfiguration().get('force.showApexJavadocDescriptionTag') === true) ? ' @description' : '';

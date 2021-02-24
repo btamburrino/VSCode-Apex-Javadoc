@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.2.1
+- Fixed two embarrasing bugs regarding class definitions and @ annotations (such as `@AuraEnabled`) being broken by 1.2.0. Please accept my humble apologies.
+
 ## 1.2.0
 - Adds the `@description` tag as specified by new ApexDoc standards by default - however this can be disabled in settings
 - Adds the `@author` tag and allows a default value to be set - however this is disabled by default
