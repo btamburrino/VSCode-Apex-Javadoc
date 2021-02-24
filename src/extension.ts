@@ -88,6 +88,7 @@ function apexJavadocCompletion(position: vscode.Position): Thenable<boolean> {
     var currLine = lineNum;
     while (funcLine.text.trim().startsWith('@')) {
         currLine++;
+        funcLine = editor.document.lineAt(currLine);
     }
 
     const parsed = parseFunc(currLine, false);
@@ -190,12 +191,12 @@ export function parseFunc(startingLine: number, needWhitespace: boolean) {
         }
     }
 
-    /* This is me printing everything out to the console during development.
+    // This is me printing everything out to the console during development.
     console.log('Method: ' + methodName);
     console.log('Has Return: ' + hasReturn);
     console.log('Variables:');
     console.log(variableList);
-    console.log('Max Size: ' + maxSize);*/
+    console.log('Max Size: ' + maxSize);
 
     // New ApexDoc specs call for a @description tag, but it's still optional
     const descriptionTag = (vscode.workspace.getConfiguration().get('force.showApexJavadocDescriptionTag') === true) ? ' @description' : '';
